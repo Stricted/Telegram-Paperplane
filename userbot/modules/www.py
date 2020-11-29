@@ -6,11 +6,14 @@
 """ Userbot module containing commands related to the \
     Information Superhighway(yes, Internet). """
 
+import os
 from datetime import datetime
 
 import speedtest
+from requests import get, post
 from telethon import functions
 
+from urllib.parse import urlparse
 from userbot import CMD_HELP
 from userbot.events import register, grp_exclude
 
@@ -25,21 +28,11 @@ async def speedtst(spd):
     test.get_best_server()
     test.download()
     test.upload()
-    test.results.share()
-    result = test.results.dict()
-
-    await spd.edit("`"
-                   "Started at "
-                   f"{result['timestamp']} \n\n"
-                   "Download "
-                   f"{speed_convert(result['download'])} \n"
-                   "Upload "
-                   f"{speed_convert(result['upload'])} \n"
-                   "Ping "
-                   f"{result['ping']} \n"
-                   "ISP "
-                   f"{result['client']['isp']}"
-                   "`")
+    image = test.results.share()
+    
+    await spd.client.send_file(spd.chat_id, image)
+    
+    await spd.delete()
 
 
 def speed_convert(size):
