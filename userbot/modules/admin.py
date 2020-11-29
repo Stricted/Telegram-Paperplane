@@ -148,7 +148,7 @@ async def promote(promt):
         await promt.edit(NO_ADMIN)
         return
 
-    new_rights = ChatAdminRights(add_admins=admin.add_admins,
+    new_rights = ChatAdminRights(add_admins=False,
                                  invite_users=admin.invite_users,
                                  change_info=admin.change_info,
                                  ban_users=admin.ban_users,
